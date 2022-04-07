@@ -2,69 +2,63 @@ package com.liseInfotech.reqresTest;
 
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static io.restassured.RestAssured.*;
 
-public class RequestTest {
+public class RequestTest extends BaseTest{
 
     @Test
     public void getListOfUsers(){
-        baseURI = "https://reqres.in/api/users?page=2";
-
         Response response = given()
                 .contentType(ContentType.JSON)
-                .get();
+                        .when()
+                                .param("page", 2)
+                                        .request(Method.GET, "/users")
+                                                .then()
+                                                        .extract()
+                                                                .response();
 
-        System.out.println("response : " + response.prettyPrint());
+        JSONObject jsonObject = new JSONObject(response.asString());
+        JSONArray data = jsonObject.getJSONArray("data");
+        System.out.println("DataArray :" + data);
 
-        JsonPath jsonPath = new JsonPath(response.asString());
+        JSONObject indexedArrayObject = data.getJSONObject(0);
+        JSONObject indexedArrayObject1 = data.getJSONObject(1);
+        System.out.println("ArrayInsideObject : " + indexedArrayObject);
+
+        JSONObject subJsonObject = jsonObject.getJSONObject("support");
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(jsonPath.get("page"), is(1));
-        assertThat(jsonPath.get("per_page"), is(6));
-        assertThat(jsonPath.get("total"), is(12));
-        assertThat(jsonPath.get("total_pages"), is(2));
+        assertThat(jsonObject.getInt("page"), is(2));
+        assertThat(jsonObject.getInt("per_page"), is(6));
+        assertThat(jsonObject.getInt("total"), is(12));
+        assertThat(jsonObject.getInt("total_pages"), is(2));
 
-        assertThat(jsonPath.get("data.id[0]"), is(1));
-        assertThat(jsonPath.get("data.email[0]"), is("george.bluth@reqres.in"));
-        assertThat(jsonPath.get("data.first_name[0]"), is("George"));
-        assertThat(jsonPath.get("data.last_name[0]"), is("Bluth"));
-        assertThat(jsonPath.get("data.avatar[0]"), is("https://reqres.in/img/faces/1-image.jpg"));
+        assertThat(indexedArrayObject.getInt("id"), is(notNullValue()));
+        assertThat(indexedArrayObject.getString("email"), is("michael.lawson@reqres.in"));
+        assertThat(indexedArrayObject.getString("first_name"), is("Michael"));
+        assertThat(indexedArrayObject.getString("last_name"), is("Lawson"));
+        assertThat(indexedArrayObject.getString("avatar"), is("https://reqres.in/img/faces/7-image.jpg"));
 
-        assertThat(jsonPath.get("data.id[1]"), is(2));
-        assertThat(jsonPath.get("data.email[1]"), is("janet.weaver@reqres.in"));
-        assertThat(jsonPath.get("data.first_name[1]"), is("Janet"));
-        assertThat(jsonPath.get("data.last_name[1]"), is("Weaver"));
-        assertThat(jsonPath.get("data.avatar[1]"), is("https://reqres.in/img/faces/2-image.jpg"));
+        assertThat(indexedArrayObject1.getString("email"), is("lindsay.ferguson@reqres.in"));
+        assertThat(indexedArrayObject1.getString("first_name"), is("Lindsay"));
+        assertThat(indexedArrayObject1.getString("last_name"), is("Ferguson"));
 
-        assertThat(jsonPath.get("data.id[2]"), is(3));
-        assertThat(jsonPath.get("data.email[2]"), is("emma.wong@reqres.in"));
-        assertThat(jsonPath.get("data.first_name[2]"), is("Emma"));
-        assertThat(jsonPath.get("data.last_name[2]"), is("Wong"));
-        assertThat(jsonPath.get("data.avatar[2]"), is("https://reqres.in/img/faces/3-image.jpg"));
-
-        assertThat(jsonPath.get("support.url"), is("https://reqres.in/#support-heading"));
-        assertThat(jsonPath.get("support.text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(subJsonObject.getString("url"), is("https://reqres.in/#support-heading"));
+        assertThat(subJsonObject.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
     @Test
     public void getSingleUser(){
         int id=2;
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -74,24 +68,28 @@ public class RequestTest {
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
-        System.out.println(response.prettyPrint());
+        JSONObject jsonObject = new JSONObject(response.asString());
+        System.out.println("jsonObj : " + jsonObject);
+        JSONObject subObject = jsonObject.getJSONObject("data");
+        System.out.println("subObj : " + subObject);
+        JSONObject subObj = jsonObject.getJSONObject("support");
+        System.out.println("subObj : " + subObj);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonPath.get("data.id"), is(id));
-        assertThat(jsonPath.get("data.email"), is("janet.weaver@reqres.in"));
-        assertThat(jsonPath.get("data.first_name"), is("Janet"));
-        assertThat(jsonPath.get("data.last_name"), is("Weaver"));
-        assertThat(jsonPath.get("data.avatar"), is("https://reqres.in/img/faces/2-image.jpg"));
 
-        assertThat(jsonPath.get("support.url"), is("https://reqres.in/#support-heading"));
-        assertThat(jsonPath.get("support.text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(subObject.getInt("id"), is(notNullValue()));
+        assertThat(subObject.getString("email"), is("janet.weaver@reqres.in"));
+        assertThat(subObject.getString("first_name"), is("Janet"));
+        assertThat(subObject.getString("last_name"), is("Weaver"));
+        assertThat(subObject.getString("avatar"), is("https://reqres.in/img/faces/2-image.jpg"));
+
+        assertThat(subObj.getString("url"), is("https://reqres.in/#support-heading"));
+        assertThat(subObj.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
     @Test
     public void getInvalidUser(){
         int invalidId = 23;
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -109,7 +107,6 @@ public class RequestTest {
     @Test
     public void getUnknownUserList(){
         String dummyText = "test";
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -119,31 +116,26 @@ public class RequestTest {
                                         .extract()
                                                 .response();
 
-        System.out.println(response.asString());
-        JsonPath jsonPath = new JsonPath(response.asString());
+        JSONObject jsonObject = new JSONObject(response.asString());
+        JSONArray data = jsonObject.getJSONArray("data");
+        JSONObject objectOfArray = data.getJSONObject(0);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonPath.get("page"), is(1));
-        assertThat(jsonPath.get("data.id[0]"), is(1));
-        assertThat(jsonPath.get("data.name[0]"), is("cerulean"));
-        assertThat(jsonPath.get("data.year[0]"), is(2000));
-        assertThat(jsonPath.get("data.color[0]"), is("#98B2D1"));
-        assertThat(jsonPath.get("data.pantone_value[0]"), is("15-4020"));
 
-        assertThat(jsonPath.get("data.id[1]"), is(2));
-        assertThat(jsonPath.get("data.name[1]"), is("fuchsia rose"));
+        assertThat(jsonObject.getInt("page"), is(1));
+        assertThat(jsonObject.getInt("per_page"), is(6));
+        assertThat(jsonObject.getInt("total"), is(12));
 
-        assertThat(jsonPath.get("data.year[2]"), is(2002));
-        assertThat(jsonPath.get("data.color[2]"), is("#BF1932"));
-
-        assertThat(jsonPath.get("data.pantone_value[3]"), is("14-4811"));
+        assertThat(objectOfArray.getInt("id"), is(notNullValue()));
+        assertThat(objectOfArray.getString("name"), is("cerulean"));
+        assertThat(objectOfArray.getInt("year"), is(2000));
+        assertThat(objectOfArray.getString("color"), is("#98B2D1"));
+        assertThat(objectOfArray.getString("pantone_value"), is("15-4020"));
     }
 
     @Test
     public void getSingleUnknownUser(){
         String dummyText = "test123";
-
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -153,27 +145,26 @@ public class RequestTest {
                                         .extract()
                                                 .response();
 
-        System.out.println(response.asString());
-        JsonPath jsonPath = new JsonPath(response.asString());
+       JSONObject jsonObject = new JSONObject(response.asString());
+       JSONObject subJsonObject = jsonObject.getJSONObject("data");
+       JSONObject subJsonObjects = jsonObject.getJSONObject("support");
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(jsonPath.get("data.id"), is(2));
-        assertThat(jsonPath.get("data.name"), is("fuchsia rose"));
-        assertThat(jsonPath.get("data.year"), is(2001));
-        assertThat(jsonPath.get("data.color"), is("#C74375"));
-        assertThat(jsonPath.get("data.pantone_value"), is("17-2031"));
+        assertThat(subJsonObject.getInt("id"), is(notNullValue()));
+        assertThat(subJsonObject.getString("name"), is("fuchsia rose"));
+        assertThat(subJsonObject.getInt("year"), is(2001));
+        assertThat(subJsonObject.getString("color"), is("#C74375"));
+        assertThat(subJsonObject.getString("pantone_value"), is("17-2031"));
 
-        assertThat(jsonPath.get("support.url"), is("https://reqres.in/#support-heading"));
-        assertThat(jsonPath.get("support.text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(subJsonObjects.getString("url"), is("https://reqres.in/#support-heading"));
+        assertThat(subJsonObjects.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
     @Test
     public void getInvalidUnknownUser(){
         String invalidUserId = "/test/23";
         System.out.println(invalidUserId);
-
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -186,7 +177,6 @@ public class RequestTest {
     public void postUser(){
         String empName = "morpheus";
         String jobTitle = "leader";
-        baseURI = "https://reqres.in/api";
 
         String body = "{" + "\"name\": \""+empName+"\"," + "\"job\": \""+jobTitle+"\"\n" + "}";
 
@@ -200,15 +190,14 @@ public class RequestTest {
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
+        JSONObject jsonObject = new JSONObject(response.asString());
 
-        System.out.println(response.asString());
         assertThat(response.statusCode(), is(HttpStatus.SC_CREATED));
 
-        assertThat(jsonPath.get("name"), containsString(empName));
-        assertThat(jsonPath.get("job"), containsString(jobTitle));
-        assertThat(jsonPath.get("id"), notNullValue());
-        assertThat(jsonPath.get("createdAt"), notNullValue());
+        assertThat(jsonObject.getString("name"), containsString(empName));
+        assertThat(jsonObject.getString("job"), containsString(jobTitle));
+        assertThat(jsonObject.getInt("id"), notNullValue());
+        assertThat(jsonObject.getString("createdAt"), notNullValue());
     }
 
     @Test
@@ -217,8 +206,6 @@ public class RequestTest {
         String empName = "morpheus";
         String updatedJobTitle = "zion resident";
         String body = "{"+" \"name\": \""+empName+"\"," + "\"job\": \""+updatedJobTitle+"\"" + "}";
-
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .accept(ContentType.JSON)
@@ -230,13 +217,12 @@ public class RequestTest {
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
-        System.out.println(response.asString());
+        JSONObject jsonObject = new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonPath.get("name"), is(empName));
-        assertThat(jsonPath.get("job"), is(updatedJobTitle));
-        assertThat(jsonPath.get("updatedAt"), notNullValue());
+        assertThat(jsonObject.getString("name"), is(empName));
+        assertThat(jsonObject.getString("job"), is(updatedJobTitle));
+        assertThat(jsonObject.getString("updatedAt"), notNullValue());
     }
 
     @Test
@@ -245,8 +231,6 @@ public class RequestTest {
         String empName = "morpheus";
         String updatedJobTitle = "zion resident";
         String body = "{"+" \"name\": \""+empName+"\"," + "\"job\": \""+updatedJobTitle+"\"" + "}";
-
-        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .accept(ContentType.JSON)
@@ -258,20 +242,17 @@ public class RequestTest {
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
-        System.out.println(response.asString());
+        JSONObject jsonObject =new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonPath.get("name"), is(empName));
-        assertThat(jsonPath.get("job"), is(updatedJobTitle));
-        assertThat(jsonPath.get("updatedAt"), notNullValue());
+        assertThat(jsonObject.getString("name"), is(empName));
+        assertThat(jsonObject.getString("job"), is(updatedJobTitle));
+        assertThat(jsonObject.getString("updatedAt"), notNullValue());
     }
 
     @Test
     public void deleteDBObject(){
         int userId = 2;
-        baseURI = "https://reqres.in/api";
-
         Response response = given()
                 .contentType(ContentType.JSON)
                 .when()
@@ -279,8 +260,6 @@ public class RequestTest {
                 .then()
                 .extract()
                 .response();
-
-        JsonPath jsonPath = new JsonPath(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_NO_CONTENT));
     }
@@ -290,7 +269,6 @@ public class RequestTest {
         String userRegistered = "register";
         String userEmail = "eve.holt@reqres.in";
         String userPassword = "pistol";
-        baseURI = "https://reqres.in/api";
         String body = "{" + "\"email\": \""+userEmail+"\"," + " \"password\": \""+userPassword+"\"" + "}";
 
         System.out.println("body : " + body);
@@ -299,24 +277,22 @@ public class RequestTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .body(body)
-                .request(Method.POST, "/register")
+                .request(Method.POST, "/"+userRegistered)
                 .then()
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
-        System.out.println("status : " + response.asString());
+       JSONObject jsonObject = new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonPath.get("id"), is(greaterThan(0)));
-        assertThat(jsonPath.get("token"), notNullValue());
+        assertThat(jsonObject.getInt("id"), is(greaterThan(0)));
+        assertThat(jsonObject.getString("token"), notNullValue());
     }
 
     @Test
     public void invalidUserCredentialBypost(){
         String userRegistered = "register";
         String userEmail = "sydney@fife";
-        baseURI = "https://reqres.in/api";
         String body = "{" + "\"email\": \""+userEmail+"\" }";
 
         Response response = given()
@@ -329,16 +305,14 @@ public class RequestTest {
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
-        System.out.println("status : " + response.asString());
+        JSONObject jsonObject = new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_BAD_REQUEST));
-        assertThat(jsonPath.get("error"), is("Missing password"));
+        assertThat(jsonObject.getString("error"), is("Missing password"));
     }
 
     @Test
     public void userLoginByPost(){
-        baseURI = "https://reqres.in/api";
         String userLogin = "login";
         String userEmail = "eve.holt@reqres.in";
         String userPassword = "cityslicka";
@@ -354,16 +328,15 @@ public class RequestTest {
                 .extract()
                 .response();
 
-        JsonPath jsonPath = new JsonPath(response.asString());
+        JSONObject jsonObject = new JSONObject(response.asString());
         System.out.println(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonPath.get("token"), notNullValue());
+        assertThat(jsonObject.getString("token"), notNullValue());
     }
 
     @Test
     public void invalidUserLoginByPost(){
-        baseURI = "https://reqres.in/api";
         String userLogin = "login";
         String userEmail = "peter@klaven";
         String body = "{" + "\"email\": \""+userEmail+"\","+ "}";
@@ -383,42 +356,41 @@ public class RequestTest {
 
     @Test
     public void getDelayResponse(){
-        baseURI = "https://reqres.in/api/users?delay=3";
-
         Response response = given()
                 .contentType(ContentType.JSON)
-                .get();
+                        .when()
+                                .param("delay", 3)
+                                        .request(Method.GET, "/users")
+                                                .then()
+                                                        .extract()
+                                                                .response();
 
-        System.out.println("response : " + response.asString());
-
-        JsonPath jsonPath = new JsonPath(response.asString());
+        JSONObject jsonObject = new JSONObject(response.asString());
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        JSONObject jsonArrayOfObject = jsonArray.getJSONObject(0);
+        JSONObject jsonArrayOfObject2 = jsonArray.getJSONObject(1);
+        JSONObject subJsonObject = jsonObject.getJSONObject("support");
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(jsonPath.get("page"), is(1));
-        assertThat(jsonPath.get("per_page"), is(6));
-        assertThat(jsonPath.get("total"), is(12));
-        assertThat(jsonPath.get("total_pages"), is(2));
+        assertThat(jsonObject.getInt("page"), is(1));
+        assertThat(jsonObject.getInt("per_page"), is(6));
+        assertThat(jsonObject.getInt("total"), is(12));
+        assertThat(jsonObject.getInt("total_pages"), is(2));
 
-        assertThat(jsonPath.get("data.id[0]"), is(1));
-        assertThat(jsonPath.get("data.email[0]"), is("george.bluth@reqres.in"));
-        assertThat(jsonPath.get("data.first_name[0]"), is("George"));
-        assertThat(jsonPath.get("data.last_name[0]"), is("Bluth"));
-        assertThat(jsonPath.get("data.avatar[0]"), is("https://reqres.in/img/faces/1-image.jpg"));
+        assertThat(jsonArrayOfObject.getInt("id"), is(notNullValue()));
+        assertThat(jsonArrayOfObject.getString("email"), is("george.bluth@reqres.in"));
+        assertThat(jsonArrayOfObject.getString("first_name"), is("George"));
+        assertThat(jsonArrayOfObject.getString("last_name"), is("Bluth"));
+        assertThat(jsonArrayOfObject.getString("avatar"), is("https://reqres.in/img/faces/1-image.jpg"));
 
-        assertThat(jsonPath.get("data.id[1]"), is(2));
-        assertThat(jsonPath.get("data.email[1]"), is("janet.weaver@reqres.in"));
-        assertThat(jsonPath.get("data.first_name[1]"), is("Janet"));
-        assertThat(jsonPath.get("data.last_name[1]"), is("Weaver"));
-        assertThat(jsonPath.get("data.avatar[1]"), is("https://reqres.in/img/faces/2-image.jpg"));
+        assertThat(jsonArrayOfObject2.getInt("id"), is(notNullValue()));
+        assertThat(jsonArrayOfObject2.getString("email"), is("janet.weaver@reqres.in"));
+        assertThat(jsonArrayOfObject2.getString("first_name"), is("Janet"));
+        assertThat(jsonArrayOfObject2.getString("last_name"), is("Weaver"));
+        assertThat(jsonArrayOfObject2.getString("avatar"), is("https://reqres.in/img/faces/2-image.jpg"));
 
-        assertThat(jsonPath.get("data.id[2]"), is(3));
-        assertThat(jsonPath.get("data.email[2]"), is("emma.wong@reqres.in"));
-        assertThat(jsonPath.get("data.first_name[2]"), is("Emma"));
-        assertThat(jsonPath.get("data.last_name[2]"), is("Wong"));
-        assertThat(jsonPath.get("data.avatar[2]"), is("https://reqres.in/img/faces/3-image.jpg"));
-
-        assertThat(jsonPath.get("support.url"), is("https://reqres.in/#support-heading"));
-        assertThat(jsonPath.get("support.text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(subJsonObject.getString("url"), is("https://reqres.in/#support-heading"));
+        assertThat(subJsonObject.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 }
