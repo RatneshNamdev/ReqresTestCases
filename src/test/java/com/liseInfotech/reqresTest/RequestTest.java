@@ -64,11 +64,15 @@ public class RequestTest {
     @Test
     public void getSingleUser(){
         int id=2;
-        baseURI = "https://reqres.in/api/users/2";
+        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .get();
+                .when()
+                .request(Method.GET, "/users/"+id)
+                .then()
+                .extract()
+                .response();
 
         JsonPath jsonPath = new JsonPath(response.asString());
         System.out.println(response.prettyPrint());
@@ -86,23 +90,34 @@ public class RequestTest {
 
     @Test
     public void getInvalidUser(){
-        baseURI = "https://reqres.in/api/users/23";
+        int invalidId = 23;
+        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .get();
+                .when()
+                .request(Method.GET, "/users/"+invalidId)
+                        .then()
+                                .extract()
+                                        .response();
+
+        System.out.println(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_NOT_FOUND));
     }
 
     @Test
-    public void getUnknown(){
+    public void getUnknownUserList(){
         String dummyText = "test";
-        baseURI = "https://reqres.in/api/"+dummyText;
+        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .get();
+                .when()
+                        .request(Method.GET, "/"+dummyText)
+                                .then()
+                                        .extract()
+                                                .response();
 
         System.out.println(response.asString());
         JsonPath jsonPath = new JsonPath(response.asString());
@@ -128,11 +143,15 @@ public class RequestTest {
     public void getSingleUnknownUser(){
         String dummyText = "test123";
 
-        baseURI = "https://reqres.in/api/"+dummyText+"/2";
+        baseURI = "https://reqres.in/api";
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .get();
+                .when()
+                        .request(Method.GET, "/"+dummyText+"/2")
+                                .then()
+                                        .extract()
+                                                .response();
 
         System.out.println(response.asString());
         JsonPath jsonPath = new JsonPath(response.asString());
