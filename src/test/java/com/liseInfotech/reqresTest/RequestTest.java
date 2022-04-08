@@ -24,36 +24,26 @@ public class RequestTest extends BaseTest{
                                                 .then()
                                                         .extract()
                                                                 .response();
+
         System.out.println("This is first priority...get(Userlist)");
-        JSONObject jsonObject = new JSONObject(response.asString());
-        JSONArray data = jsonObject.getJSONArray("data");
-        System.out.println("DataArray :" + data);
 
-        JSONObject indexedArrayObject = data.getJSONObject(0);
-        JSONObject indexedArrayObject1 = data.getJSONObject(1);
-        System.out.println("ArrayInsideObject : " + indexedArrayObject);
-
-        JSONObject subJsonObject = jsonObject.getJSONObject("support");
+        ReqresData resData = response.as(ReqresData.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(jsonObject.getInt("page"), is(2));
-        assertThat(jsonObject.getInt("per_page"), is(6));
-        assertThat(jsonObject.getInt("total"), is(12));
-        assertThat(jsonObject.getInt("total_pages"), is(2));
+        assertThat(resData.getPage(), is(2));
+        assertThat(resData.getPer_page(), is(6));
+        assertThat(resData.getTotal(), is(12));
+        assertThat(resData.getTotal_pages(), is(2));
 
-        assertThat(indexedArrayObject.getInt("id"), is(notNullValue()));
-        assertThat(indexedArrayObject.getString("email"), is("michael.lawson@reqres.in"));
-        assertThat(indexedArrayObject.getString("first_name"), is("Michael"));
-        assertThat(indexedArrayObject.getString("last_name"), is("Lawson"));
-        assertThat(indexedArrayObject.getString("avatar"), is("https://reqres.in/img/faces/7-image.jpg"));
+        assertThat(resData.getData().get(0).getId(), is(notNullValue()));
+        assertThat(resData.getData().get(0).getEmail(), is("michael.lawson@reqres.in"));
+        assertThat(resData.getData().get(0).getFirst_name(), is("Michael"));
+        assertThat(resData.getData().get(0).getLast_name(), is("Lawson"));
+        assertThat(resData.getData().get(0).getAvatar(), is("https://reqres.in/img/faces/7-image.jpg"));
 
-        assertThat(indexedArrayObject1.getString("email"), is("lindsay.ferguson@reqres.in"));
-        assertThat(indexedArrayObject1.getString("first_name"), is("Lindsay"));
-        assertThat(indexedArrayObject1.getString("last_name"), is("Ferguson"));
-
-        assertThat(subJsonObject.getString("url"), is("https://reqres.in/#support-heading"));
-        assertThat(subJsonObject.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(resData.getSupport().url, is("https://reqres.in/#support-heading"));
+        assertThat(resData.getSupport().text, is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
     @Test(priority = 2)
