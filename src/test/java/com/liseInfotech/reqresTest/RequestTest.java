@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.*;
 
 public class RequestTest extends BaseTest{
 
-    @Test
+    @Test(priority = 1)
     public void getListOfUsers(){
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -24,7 +24,7 @@ public class RequestTest extends BaseTest{
                                                 .then()
                                                         .extract()
                                                                 .response();
-
+        System.out.println("This is first priority...get(Userlist)");
         JSONObject jsonObject = new JSONObject(response.asString());
         JSONArray data = jsonObject.getJSONArray("data");
         System.out.println("DataArray :" + data);
@@ -56,7 +56,7 @@ public class RequestTest extends BaseTest{
         assertThat(subJsonObject.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
-    @Test
+    @Test(priority = 2)
     public void getSingleUser(){
         int id=2;
 
@@ -68,6 +68,7 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is second priority...get(singleUser)");
         JSONObject jsonObject = new JSONObject(response.asString());
         System.out.println("jsonObj : " + jsonObject);
         JSONObject subObject = jsonObject.getJSONObject("data");
@@ -87,7 +88,7 @@ public class RequestTest extends BaseTest{
         assertThat(subObj.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
-    @Test
+    @Test(priority = 6)
     public void getInvalidUser(){
         int invalidId = 23;
 
@@ -98,13 +99,13 @@ public class RequestTest extends BaseTest{
                         .then()
                                 .extract()
                                         .response();
-
+        System.out.println("This is sixth priority...get_invalidUser");
         System.out.println(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_NOT_FOUND));
     }
 
-    @Test
+    @Test(priority = 3)
     public void getUnknownUserList(){
         String dummyText = "test";
 
@@ -116,6 +117,7 @@ public class RequestTest extends BaseTest{
                                         .extract()
                                                 .response();
 
+        System.out.println("This is third priority...get_UnknownList");
         JSONObject jsonObject = new JSONObject(response.asString());
         JSONArray data = jsonObject.getJSONArray("data");
         JSONObject objectOfArray = data.getJSONObject(0);
@@ -133,7 +135,7 @@ public class RequestTest extends BaseTest{
         assertThat(objectOfArray.getString("pantone_value"), is("15-4020"));
     }
 
-    @Test
+    @Test(priority = 4)
     public void getSingleUnknownUser(){
         String dummyText = "test123";
 
@@ -145,6 +147,7 @@ public class RequestTest extends BaseTest{
                                         .extract()
                                                 .response();
 
+        System.out.println("This is fourth priority...get_SingleUnknown");
        JSONObject jsonObject = new JSONObject(response.asString());
        JSONObject subJsonObject = jsonObject.getJSONObject("data");
        JSONObject subJsonObjects = jsonObject.getJSONObject("support");
@@ -161,11 +164,11 @@ public class RequestTest extends BaseTest{
         assertThat(subJsonObjects.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
-    @Test
+    @Test(priority = 7)
     public void getInvalidUnknownUser(){
         String invalidUserId = "/test/23";
-        System.out.println(invalidUserId);
 
+        System.out.println("This is seventh priority...get_InvalidUnknown");
         Response response = given()
                 .contentType(ContentType.JSON)
                 .get(invalidUserId);
@@ -173,7 +176,7 @@ public class RequestTest extends BaseTest{
         assertThat(response.statusCode(), is(HttpStatus.SC_NOT_FOUND));
     }
 
-    @Test
+    @Test(priority = 8)
     public void postUser(){
         String empName = "morpheus";
         String jobTitle = "leader";
@@ -190,6 +193,7 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is eighth priority...postUser");
         JSONObject jsonObject = new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_CREATED));
@@ -200,7 +204,7 @@ public class RequestTest extends BaseTest{
         assertThat(jsonObject.getString("createdAt"), notNullValue());
     }
 
-    @Test
+    @Test(priority = 13)
     public void updateUserDetailsByPut(){
         int userId = 2;
         String empName = "morpheus";
@@ -217,6 +221,7 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is 13 in priority...putUpdateUser");
         JSONObject jsonObject = new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
@@ -225,7 +230,7 @@ public class RequestTest extends BaseTest{
         assertThat(jsonObject.getString("updatedAt"), notNullValue());
     }
 
-    @Test
+    @Test(priority = 14)
     public void updateUserDetailsByPatch(){
         int userId = 2;
         String empName = "morpheus";
@@ -242,6 +247,7 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is 14th priority...patchUpdateUserDetails");
         JSONObject jsonObject =new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
@@ -250,7 +256,7 @@ public class RequestTest extends BaseTest{
         assertThat(jsonObject.getString("updatedAt"), notNullValue());
     }
 
-    @Test
+    @Test(priority = 15)
     public void deleteDBObject(){
         int userId = 2;
         Response response = given()
@@ -261,16 +267,18 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is 15th priority...delete");
         assertThat(response.statusCode(), is(HttpStatus.SC_NO_CONTENT));
     }
 
-    @Test
+    @Test(priority = 9)
     public void postUserCredential(){
         String userRegistered = "register";
         String userEmail = "eve.holt@reqres.in";
         String userPassword = "pistol";
         String body = "{" + "\"email\": \""+userEmail+"\"," + " \"password\": \""+userPassword+"\"" + "}";
 
+        System.out.println("This is nine th priority...postUserCre");
         System.out.println("body : " + body);
         Response response = given()
                 .accept(ContentType.JSON)
@@ -289,8 +297,8 @@ public class RequestTest extends BaseTest{
         assertThat(jsonObject.getString("token"), notNullValue());
     }
 
-    @Test
-    public void invalidUserCredentialBypost(){
+    @Test(priority = 11)
+    public void invalidUserCredentialByPost(){
         String userRegistered = "register";
         String userEmail = "sydney@fife";
         String body = "{" + "\"email\": \""+userEmail+"\" }";
@@ -305,13 +313,14 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is 11th priority...postInvalidCre");
         JSONObject jsonObject = new JSONObject(response.asString());
 
         assertThat(response.statusCode(), is(HttpStatus.SC_BAD_REQUEST));
         assertThat(jsonObject.getString("error"), is("Missing password"));
     }
 
-    @Test
+    @Test(priority = 10)
     public void userLoginByPost(){
         String userLogin = "login";
         String userEmail = "eve.holt@reqres.in";
@@ -328,6 +337,7 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is tenth priority...postLogin");
         JSONObject jsonObject = new JSONObject(response.asString());
         System.out.println(response.asString());
 
@@ -335,7 +345,7 @@ public class RequestTest extends BaseTest{
         assertThat(jsonObject.getString("token"), notNullValue());
     }
 
-    @Test
+    @Test(priority = 12)
     public void invalidUserLoginByPost(){
         String userLogin = "login";
         String userEmail = "peter@klaven";
@@ -351,10 +361,11 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
+        System.out.println("This is 12th priority...postInvalidUserLogin");
         assertThat(response.statusCode(), is(HttpStatus.SC_BAD_REQUEST));
     }
 
-    @Test
+    @Test(priority = 5)
     public void getDelayResponse(){
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -365,6 +376,7 @@ public class RequestTest extends BaseTest{
                                                         .extract()
                                                                 .response();
 
+        System.out.println("This is fifth priority...getDelayResponse");
         JSONObject jsonObject = new JSONObject(response.asString());
         JSONArray jsonArray = jsonObject.getJSONArray("data");
         JSONObject jsonArrayOfObject = jsonArray.getJSONObject(0);
