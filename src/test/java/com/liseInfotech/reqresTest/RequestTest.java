@@ -65,7 +65,9 @@ public class RequestTest extends BaseTest{
         System.out.println("subObj : " + subObject);
         JSONObject subObj = jsonObject.getJSONObject("support");
         System.out.println("subObj : " + subObj);
+        System.out.println("response : " + response.asString());
 
+       // ReqresData resData = response.as(ReqresData.class);
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
         assertThat(subObject.getInt("id"), is(notNullValue()));
@@ -139,6 +141,7 @@ public class RequestTest extends BaseTest{
 
         System.out.println("This is fourth priority...get_SingleUnknown");
        JSONObject jsonObject = new JSONObject(response.asString());
+        System.out.println("res : " + response.asString());
        JSONObject subJsonObject = jsonObject.getJSONObject("data");
        JSONObject subJsonObjects = jsonObject.getJSONObject("support");
 
@@ -367,32 +370,30 @@ public class RequestTest extends BaseTest{
                                                                 .response();
 
         System.out.println("This is fifth priority...getDelayResponse");
-        JSONObject jsonObject = new JSONObject(response.asString());
-        JSONArray jsonArray = jsonObject.getJSONArray("data");
-        JSONObject jsonArrayOfObject = jsonArray.getJSONObject(0);
-        JSONObject jsonArrayOfObject2 = jsonArray.getJSONObject(1);
-        JSONObject subJsonObject = jsonObject.getJSONObject("support");
+//        JSONObject jsonObject = new JSONObject(response.asString());
+//        System.out.println("response : " + response.asString());
+//        JSONArray jsonArray = jsonObject.getJSONArray("data");
+//        JSONObject jsonArrayOfObject = jsonArray.getJSONObject(0);
+//        JSONObject jsonArrayOfObject2 = jsonArray.getJSONObject(1);
+//        JSONObject subJsonObject = jsonObject.getJSONObject("support");
+
+        ReqresData resData = response.as(ReqresData.class);
+        System.out.println("response : " + resData);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(jsonObject.getInt("page"), is(1));
-        assertThat(jsonObject.getInt("per_page"), is(6));
-        assertThat(jsonObject.getInt("total"), is(12));
-        assertThat(jsonObject.getInt("total_pages"), is(2));
+        assertThat(resData.getPage(), is(1));
+        assertThat(resData.getPer_page(), is(6));
+        assertThat(resData.getTotal(), is(12));
+        assertThat(resData.getTotal_pages(), is(2));
 
-        assertThat(jsonArrayOfObject.getInt("id"), is(notNullValue()));
-        assertThat(jsonArrayOfObject.getString("email"), is("george.bluth@reqres.in"));
-        assertThat(jsonArrayOfObject.getString("first_name"), is("George"));
-        assertThat(jsonArrayOfObject.getString("last_name"), is("Bluth"));
-        assertThat(jsonArrayOfObject.getString("avatar"), is("https://reqres.in/img/faces/1-image.jpg"));
+        assertThat(resData.getData().get(0).getId(), is(notNullValue()));
+        assertThat(resData.getData().get(0).getEmail(), is("george.bluth@reqres.in"));
+        assertThat(resData.getData().get(0).getFirst_name(), is("George"));
+        assertThat(resData.getData().get(0).getLast_name(), is("Bluth"));
+        assertThat(resData.getData().get(0).getAvatar(), is("https://reqres.in/img/faces/1-image.jpg"));
 
-        assertThat(jsonArrayOfObject2.getInt("id"), is(notNullValue()));
-        assertThat(jsonArrayOfObject2.getString("email"), is("janet.weaver@reqres.in"));
-        assertThat(jsonArrayOfObject2.getString("first_name"), is("Janet"));
-        assertThat(jsonArrayOfObject2.getString("last_name"), is("Weaver"));
-        assertThat(jsonArrayOfObject2.getString("avatar"), is("https://reqres.in/img/faces/2-image.jpg"));
-
-        assertThat(subJsonObject.getString("url"), is("https://reqres.in/#support-heading"));
-        assertThat(subJsonObject.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(resData.getSupport().url, is("https://reqres.in/#support-heading"));
+        assertThat(resData.getSupport().text, is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 }
