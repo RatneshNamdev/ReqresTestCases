@@ -4,7 +4,6 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
@@ -59,25 +58,19 @@ public class RequestTest extends BaseTest{
                 .response();
 
         System.out.println("This is second priority...get(singleUser)");
-        JSONObject jsonObject = new JSONObject(response.asString());
-        System.out.println("jsonObj : " + jsonObject);
-        JSONObject subObject = jsonObject.getJSONObject("data");
-        System.out.println("subObj : " + subObject);
-        JSONObject subObj = jsonObject.getJSONObject("support");
-        System.out.println("subObj : " + subObj);
-        System.out.println("response : " + response.asString());
 
-       // ReqresData resData = response.as(ReqresData.class);
+        SingleUserReqData userData = response.as(SingleUserReqData.class);
+
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(subObject.getInt("id"), is(notNullValue()));
-        assertThat(subObject.getString("email"), is("janet.weaver@reqres.in"));
-        assertThat(subObject.getString("first_name"), is("Janet"));
-        assertThat(subObject.getString("last_name"), is("Weaver"));
-        assertThat(subObject.getString("avatar"), is("https://reqres.in/img/faces/2-image.jpg"));
+        assertThat(userData.getData().getId(), is(notNullValue()));
+        assertThat(userData.getData().getEmail(), is("janet.weaver@reqres.in"));
+        assertThat(userData.getData().getFirst_name(), is("Janet"));
+        assertThat(userData.getData().getLast_name(), is("Weaver"));
+        assertThat(userData.getData().getAvatar(), is("https://reqres.in/img/faces/2-image.jpg"));
 
-        assertThat(subObj.getString("url"), is("https://reqres.in/#support-heading"));
-        assertThat(subObj.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(userData.getSupport().url, is("https://reqres.in/#support-heading"));
+        assertThat(userData.getSupport().text, is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
     @Test(priority = 6)
@@ -110,21 +103,22 @@ public class RequestTest extends BaseTest{
                                                 .response();
 
         System.out.println("This is third priority...get_UnknownList");
-        JSONObject jsonObject = new JSONObject(response.asString());
-        JSONArray data = jsonObject.getJSONArray("data");
-        JSONObject objectOfArray = data.getJSONObject(0);
+
+        UnknownUserListData userData = response.as(UnknownUserListData.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(jsonObject.getInt("page"), is(1));
-        assertThat(jsonObject.getInt("per_page"), is(6));
-        assertThat(jsonObject.getInt("total"), is(12));
+        assertThat(userData.getPage(), is(1));
+        assertThat(userData.getPer_page(), is(6));
+        assertThat(userData.getTotal(), is(12));
 
-        assertThat(objectOfArray.getInt("id"), is(notNullValue()));
-        assertThat(objectOfArray.getString("name"), is("cerulean"));
-        assertThat(objectOfArray.getInt("year"), is(2000));
-        assertThat(objectOfArray.getString("color"), is("#98B2D1"));
-        assertThat(objectOfArray.getString("pantone_value"), is("15-4020"));
+        assertThat(userData.getData().get(0).getId(), is(notNullValue()));
+        assertThat(userData.getData().get(0).getName(), is("cerulean"));
+        assertThat(userData.getData().get(0).getYear(), is(2000));
+        assertThat(userData.getData().get(0).getColor(), is("#98B2D1"));
+        assertThat(userData.getData().get(0).getPantone_value(), is("15-4020"));
+
+        assertThat(userData.getSupport().url, is("https://reqres.in/#support-heading"));
     }
 
     @Test(priority = 4)
@@ -140,21 +134,19 @@ public class RequestTest extends BaseTest{
                                                 .response();
 
         System.out.println("This is fourth priority...get_SingleUnknown");
-       JSONObject jsonObject = new JSONObject(response.asString());
-        System.out.println("res : " + response.asString());
-       JSONObject subJsonObject = jsonObject.getJSONObject("data");
-       JSONObject subJsonObjects = jsonObject.getJSONObject("support");
+
+        SingleUnknownUserData userData = response.as(SingleUnknownUserData.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
-        assertThat(subJsonObject.getInt("id"), is(notNullValue()));
-        assertThat(subJsonObject.getString("name"), is("fuchsia rose"));
-        assertThat(subJsonObject.getInt("year"), is(2001));
-        assertThat(subJsonObject.getString("color"), is("#C74375"));
-        assertThat(subJsonObject.getString("pantone_value"), is("17-2031"));
+        assertThat(userData.getData().getId(), is(notNullValue()));
+        assertThat(userData.getData().getName(), is("fuchsia rose"));
+        assertThat(userData.getData().getYear(), is(2001));
+        assertThat(userData.getData().getColor(), is("#C74375"));
+        assertThat(userData.getData().getPantone_value(), is("17-2031"));
 
-        assertThat(subJsonObjects.getString("url"), is("https://reqres.in/#support-heading"));
-        assertThat(subJsonObjects.getString("text"), is("To keep ReqRes free, contributions towards server costs are appreciated!"));
+        assertThat(userData.getSupport().url, is("https://reqres.in/#support-heading"));
+        assertThat(userData.getSupport().text, is("To keep ReqRes free, contributions towards server costs are appreciated!"));
     }
 
     @Test(priority = 7)
@@ -187,14 +179,15 @@ public class RequestTest extends BaseTest{
                 .response();
 
         System.out.println("This is eighth priority...postUser");
-        JSONObject jsonObject = new JSONObject(response.asString());
+
+        PostUserData userData = response.as(PostUserData.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_CREATED));
 
-        assertThat(jsonObject.getString("name"), containsString(empName));
-        assertThat(jsonObject.getString("job"), containsString(jobTitle));
-        assertThat(jsonObject.getInt("id"), notNullValue());
-        assertThat(jsonObject.getString("createdAt"), notNullValue());
+        assertThat(userData.getName(), containsString(empName));
+        assertThat(userData.getJob(), containsString(jobTitle));
+        assertThat(userData.getId(), notNullValue());
+        assertThat(userData.getCreatedAt(), notNullValue());
     }
 
     @Test(priority = 13)
@@ -215,12 +208,14 @@ public class RequestTest extends BaseTest{
                 .response();
 
         System.out.println("This is 13 in priority...putUpdateUser");
-        JSONObject jsonObject = new JSONObject(response.asString());
+
+        PutPatchUserData userData = response.as(PutPatchUserData.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonObject.getString("name"), is(empName));
-        assertThat(jsonObject.getString("job"), is(updatedJobTitle));
-        assertThat(jsonObject.getString("updatedAt"), notNullValue());
+
+        assertThat(userData.getName(), is(empName));
+        assertThat(userData.getJob(), is(updatedJobTitle));
+        assertThat(userData.getUpdatedAt(), notNullValue());
     }
 
     @Test(priority = 14)
@@ -241,12 +236,14 @@ public class RequestTest extends BaseTest{
                 .response();
 
         System.out.println("This is 14th priority...patchUpdateUserDetails");
-        JSONObject jsonObject =new JSONObject(response.asString());
+
+        PutPatchUserData userData = response.as(PutPatchUserData.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonObject.getString("name"), is(empName));
-        assertThat(jsonObject.getString("job"), is(updatedJobTitle));
-        assertThat(jsonObject.getString("updatedAt"), notNullValue());
+
+        assertThat(userData.getName(), is(empName));
+        assertThat(userData.getJob(), is(updatedJobTitle));
+        assertThat(userData.getUpdatedAt(), notNullValue());
     }
 
     @Test(priority = 15)
@@ -283,11 +280,12 @@ public class RequestTest extends BaseTest{
                 .extract()
                 .response();
 
-       JSONObject jsonObject = new JSONObject(response.asString());
+        PostUserCredential userCredential = response.as(PostUserCredential.class);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
-        assertThat(jsonObject.getInt("id"), is(greaterThan(0)));
-        assertThat(jsonObject.getString("token"), notNullValue());
+
+        assertThat(userCredential.getId(), is(greaterThan(0)));
+        assertThat(userCredential.getToken(), notNullValue());
     }
 
     @Test(priority = 11)
@@ -370,15 +368,8 @@ public class RequestTest extends BaseTest{
                                                                 .response();
 
         System.out.println("This is fifth priority...getDelayResponse");
-//        JSONObject jsonObject = new JSONObject(response.asString());
-//        System.out.println("response : " + response.asString());
-//        JSONArray jsonArray = jsonObject.getJSONArray("data");
-//        JSONObject jsonArrayOfObject = jsonArray.getJSONObject(0);
-//        JSONObject jsonArrayOfObject2 = jsonArray.getJSONObject(1);
-//        JSONObject subJsonObject = jsonObject.getJSONObject("support");
 
         ReqresData resData = response.as(ReqresData.class);
-        System.out.println("response : " + resData);
 
         assertThat(response.statusCode(), is(HttpStatus.SC_OK));
 
