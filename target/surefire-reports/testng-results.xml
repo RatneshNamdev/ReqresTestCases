@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="1" total="16" passed="15">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Surefire suite" duration-ms="13683" started-at="2022-04-11T18:49:55 IST" finished-at="2022-04-11T18:50:09 IST">
+    <groups>
+    </groups>
+    <test name="Surefire test" duration-ms="13683" started-at="2022-04-11T18:49:55 IST" finished-at="2022-04-11T18:50:09 IST">
+      <class name="com.liseInfotech.reqresTest.RequestTest">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="beforeSuite" is-config="true" duration-ms="599" started-at="2022-04-11T18:49:54 IST" finished-at="2022-04-11T18:49:55 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="getListOfUsers()[pri:1, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getListOfUsers" duration-ms="2858" started-at="2022-04-11T18:49:55 IST" finished-at="2022-04-11T18:49:58 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getListOfUsers -->
+        <test-method status="PASS" signature="getSingleUser()[pri:2, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getSingleUser" duration-ms="354" started-at="2022-04-11T18:49:58 IST" finished-at="2022-04-11T18:49:58 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getSingleUser -->
+        <test-method status="PASS" signature="getUnknownUserList()[pri:3, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getUnknownUserList" duration-ms="301" started-at="2022-04-11T18:49:58 IST" finished-at="2022-04-11T18:49:58 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getUnknownUserList -->
+        <test-method status="PASS" signature="getSingleUnknownUser()[pri:4, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getSingleUnknownUser" duration-ms="290" started-at="2022-04-11T18:49:58 IST" finished-at="2022-04-11T18:49:59 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getSingleUnknownUser -->
+        <test-method status="PASS" signature="getDelayResponse()[pri:5, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getDelayResponse" duration-ms="3704" started-at="2022-04-11T18:49:59 IST" finished-at="2022-04-11T18:50:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getDelayResponse -->
+        <test-method status="PASS" signature="getInvalidUser()[pri:6, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getInvalidUser" duration-ms="329" started-at="2022-04-11T18:50:02 IST" finished-at="2022-04-11T18:50:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getInvalidUser -->
+        <test-method status="PASS" signature="getInvalidUnknownUser()[pri:7, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="getInvalidUnknownUser" duration-ms="580" started-at="2022-04-11T18:50:03 IST" finished-at="2022-04-11T18:50:03 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getInvalidUnknownUser -->
+        <test-method status="PASS" signature="postUser()[pri:8, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="postUser" duration-ms="628" started-at="2022-04-11T18:50:03 IST" finished-at="2022-04-11T18:50:04 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postUser -->
+        <test-method status="PASS" signature="postUserCredential()[pri:9, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="postUserCredential" duration-ms="909" started-at="2022-04-11T18:50:04 IST" finished-at="2022-04-11T18:50:05 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postUserCredential -->
+        <test-method status="PASS" signature="userLoginByPost()[pri:10, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="userLoginByPost" duration-ms="616" started-at="2022-04-11T18:50:05 IST" finished-at="2022-04-11T18:50:05 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- userLoginByPost -->
+        <test-method status="PASS" signature="invalidUserCredentialByPost()[pri:11, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="invalidUserCredentialByPost" duration-ms="605" started-at="2022-04-11T18:50:05 IST" finished-at="2022-04-11T18:50:06 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- invalidUserCredentialByPost -->
+        <test-method status="PASS" signature="invalidUserLoginByPost()[pri:12, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="invalidUserLoginByPost" duration-ms="616" started-at="2022-04-11T18:50:06 IST" finished-at="2022-04-11T18:50:07 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- invalidUserLoginByPost -->
+        <test-method status="PASS" signature="updateUserDetailsByPut()[pri:13, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="updateUserDetailsByPut" duration-ms="616" started-at="2022-04-11T18:50:07 IST" finished-at="2022-04-11T18:50:07 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateUserDetailsByPut -->
+        <test-method status="PASS" signature="updateUserDetailsByPatch()[pri:14, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="updateUserDetailsByPatch" duration-ms="526" started-at="2022-04-11T18:50:07 IST" finished-at="2022-04-11T18:50:08 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateUserDetailsByPatch -->
+        <test-method status="PASS" signature="deleteDBObject()[pri:15, instance:com.liseInfotech.reqresTest.RequestTest@4d95d2a2]" name="deleteDBObject" duration-ms="698" started-at="2022-04-11T18:50:08 IST" finished-at="2022-04-11T18:50:09 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteDBObject -->
+      </class> <!-- com.liseInfotech.reqresTest.RequestTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>

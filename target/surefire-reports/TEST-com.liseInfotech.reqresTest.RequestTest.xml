@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.liseInfotech.reqresTest.RequestTest" time="26.365" tests="15" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="gopherProxySet" value="false"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/aaa/Documents/ReqresTestCases/target/test-classes:/Users/aaa/Documents/ReqresTestCases/target/classes:/Users/aaa/.m2/repository/io/rest-assured/rest-assured/4.5.0/rest-assured-4.5.0.jar:/Users/aaa/.m2/repository/org/codehaus/groovy/groovy/3.0.9/groovy-3.0.9.jar:/Users/aaa/.m2/repository/org/codehaus/groovy/groovy-xml/3.0.9/groovy-xml-3.0.9.jar:/Users/aaa/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar:/Users/aaa/.m2/repository/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar:/Users/aaa/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/Users/aaa/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar:/Users/aaa/.m2/repository/org/apache/httpcomponents/httpmime/4.5.13/httpmime-4.5.13.jar:/Users/aaa/.m2/repository/org/hamcrest/hamcrest/2.1/hamcrest-2.1.jar:/Users/aaa/.m2/repository/org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar:/Users/aaa/.m2/repository/io/rest-assured/json-path/4.5.0/json-path-4.5.0.jar:/Users/aaa/.m2/repository/org/codehaus/groovy/groovy-json/3.0.9/groovy-json-3.0.9.jar:/Users/aaa/.m2/repository/io/rest-assured/rest-assured-common/4.5.0/rest-assured-common-4.5.0.jar:/Users/aaa/.m2/repository/io/rest-assured/xml-path/4.5.0/xml-path-4.5.0.jar:/Users/aaa/.m2/repository/org/apache/commons/commons-lang3/3.11/commons-lang3-3.11.jar:/Users/aaa/.m2/repository/org/testng/testng/7.5/testng-7.5.jar:/Users/aaa/.m2/repository/com/google/code/findbugs/jsr305/3.0.1/jsr305-3.0.1.jar:/Users/aaa/.m2/repository/org/slf4j/slf4j-api/1.7.32/slf4j-api-1.7.32.jar:/Users/aaa/.m2/repository/com/beust/jcommander/1.78/jcommander-1.78.jar:/Users/aaa/.m2/repository/org/webjars/jquery/3.5.1/jquery-3.5.1.jar:/Users/aaa/.m2/repository/org/json/json/20220320/json-20220320.jar:/Users/aaa/.m2/repository/org/projectlombok/lombok/1.18.22/lombok-1.18.22.jar:/Users/aaa/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.2.2/jackson-databind-2.13.2.2.jar:/Users/aaa/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.2/jackson-annotations-2.13.2.jar:/Users/aaa/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.2/jackson-core-2.13.2.jar:/Users/aaa/.m2/repository/org/uncommons/reportng/1.1.4/reportng-1.1.4.jar:/Users/aaa/.m2/repository/velocity/velocity/1.4/velocity-1.4.jar:/Users/aaa/.m2/repository/velocity/velocity-dep/1.4/velocity-dep-1.4.jar:"/>
+    <property name="java.vm.vendor" value="AdoptOpenJDK"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Kolkata"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="user.country" value="IN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib"/>
+    <property name="sun.java.command" value="/Users/aaa/Documents/ReqresTestCases/target/surefire/surefirebooter7796238415714572921.jar /Users/aaa/Documents/ReqresTestCases/target/surefire 2022-04-11T18-18-08_367-jvmRun1 surefire8681250209338707910tmp surefire_03296871146583076635tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="test" value="com.liseInfotech.reqresTest.RequestTest"/>
+    <property name="surefire.test.class.path" value="/Users/aaa/Documents/ReqresTestCases/target/test-classes:/Users/aaa/Documents/ReqresTestCases/target/classes:/Users/aaa/.m2/repository/io/rest-assured/rest-assured/4.5.0/rest-assured-4.5.0.jar:/Users/aaa/.m2/repository/org/codehaus/groovy/groovy/3.0.9/groovy-3.0.9.jar:/Users/aaa/.m2/repository/org/codehaus/groovy/groovy-xml/3.0.9/groovy-xml-3.0.9.jar:/Users/aaa/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar:/Users/aaa/.m2/repository/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar:/Users/aaa/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/Users/aaa/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar:/Users/aaa/.m2/repository/org/apache/httpcomponents/httpmime/4.5.13/httpmime-4.5.13.jar:/Users/aaa/.m2/repository/org/hamcrest/hamcrest/2.1/hamcrest-2.1.jar:/Users/aaa/.m2/repository/org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar:/Users/aaa/.m2/repository/io/rest-assured/json-path/4.5.0/json-path-4.5.0.jar:/Users/aaa/.m2/repository/org/codehaus/groovy/groovy-json/3.0.9/groovy-json-3.0.9.jar:/Users/aaa/.m2/repository/io/rest-assured/rest-assured-common/4.5.0/rest-assured-common-4.5.0.jar:/Users/aaa/.m2/repository/io/rest-assured/xml-path/4.5.0/xml-path-4.5.0.jar:/Users/aaa/.m2/repository/org/apache/commons/commons-lang3/3.11/commons-lang3-3.11.jar:/Users/aaa/.m2/repository/org/testng/testng/7.5/testng-7.5.jar:/Users/aaa/.m2/repository/com/google/code/findbugs/jsr305/3.0.1/jsr305-3.0.1.jar:/Users/aaa/.m2/repository/org/slf4j/slf4j-api/1.7.32/slf4j-api-1.7.32.jar:/Users/aaa/.m2/repository/com/beust/jcommander/1.78/jcommander-1.78.jar:/Users/aaa/.m2/repository/org/webjars/jquery/3.5.1/jquery-3.5.1.jar:/Users/aaa/.m2/repository/org/json/json/20220320/json-20220320.jar:/Users/aaa/.m2/repository/org/projectlombok/lombok/1.18.22/lombok-1.18.22.jar:/Users/aaa/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.13.2.2/jackson-databind-2.13.2.2.jar:/Users/aaa/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.13.2/jackson-annotations-2.13.2.jar:/Users/aaa/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.13.2/jackson-core-2.13.2.jar:/Users/aaa/.m2/repository/org/uncommons/reportng/1.1.4/reportng-1.1.4.jar:/Users/aaa/.m2/repository/velocity/velocity/1.4/velocity-1.4.jar:/Users/aaa/.m2/repository/velocity/velocity-dep/1.4/velocity-dep-1.4.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/aaa"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre"/>
+    <property name="basedir" value="/Users/aaa/Documents/ReqresTestCases"/>
+    <property name="file.separator" value="/"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/Users/aaa/Documents/ReqresTestCases/target/surefire/surefirebooter7796238415714572921.jar"/>
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/classes"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="1.8.0_232-b09"/>
+    <property name="user.name" value="aaa"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="10.15.7"/>
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/endorsed"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="US-ASCII"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/Users/aaa/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/var/folders/5_/dd8fd09s6vqcb95hrmk_h4nc0000gn/T/"/>
+    <property name="java.version" value="1.8.0_232"/>
+    <property name="user.dir" value="/Users/aaa/Documents/ReqresTestCases"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/Users/aaa/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="AdoptOpenJDK"/>
+    <property name="java.vm.version" value="25.232-b09"/>
+    <property name="java.ext.dirs" value="/Users/aaa/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+  </properties>
+  <testcase name="getListOfUsers" classname="com.liseInfotech.reqresTest.RequestTest" time="3.507">
+    <system-out><![CDATA[This is first priority...get(Userlist)
+]]></system-out>
+    <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
+  </testcase>
+  <testcase name="getSingleUser" classname="com.liseInfotech.reqresTest.RequestTest" time="0.356">
+    <system-out><![CDATA[This is second priority...get(singleUser)
+]]></system-out>
+  </testcase>
+  <testcase name="getUnknownUserList" classname="com.liseInfotech.reqresTest.RequestTest" time="0.305">
+    <system-out><![CDATA[This is third priority...get_UnknownList
+]]></system-out>
+  </testcase>
+  <testcase name="getSingleUnknownUser" classname="com.liseInfotech.reqresTest.RequestTest" time="0.349">
+    <system-out><![CDATA[This is fourth priority...get_SingleUnknown
+]]></system-out>
+  </testcase>
+  <testcase name="getDelayResponse" classname="com.liseInfotech.reqresTest.RequestTest" time="3.582">
+    <system-out><![CDATA[This is fifth priority...getDelayResponse
+]]></system-out>
+  </testcase>
+  <testcase name="getInvalidUser" classname="com.liseInfotech.reqresTest.RequestTest" time="0.315">
+    <system-out><![CDATA[This is sixth priority...get_invalidUser
+{}
+]]></system-out>
+  </testcase>
+  <testcase name="getInvalidUnknownUser" classname="com.liseInfotech.reqresTest.RequestTest" time="0.297">
+    <system-out><![CDATA[This is seventh priority...get_InvalidUnknown
+]]></system-out>
+  </testcase>
+  <testcase name="postUser" classname="com.liseInfotech.reqresTest.RequestTest" time="0.635">
+    <system-out><![CDATA[This is eighth priority...postUser
+]]></system-out>
+  </testcase>
+  <testcase name="postUserCredential" classname="com.liseInfotech.reqresTest.RequestTest" time="0.924">
+    <system-out><![CDATA[This is nine th priority...postUserCre
+body : {"email": "eve.holt@reqres.in", "password": "pistol"}
+]]></system-out>
+  </testcase>
+  <testcase name="userLoginByPost" classname="com.liseInfotech.reqresTest.RequestTest" time="0.641">
+    <system-out><![CDATA[This is tenth priority...postLogin
+{"token":"QpwL5tke4Pnpja7X4"}
+]]></system-out>
+  </testcase>
+  <testcase name="invalidUserCredentialByPost" classname="com.liseInfotech.reqresTest.RequestTest" time="0.851">
+    <system-out><![CDATA[This is 11th priority...postInvalidCre
+]]></system-out>
+  </testcase>
+  <testcase name="invalidUserLoginByPost" classname="com.liseInfotech.reqresTest.RequestTest" time="0.678">
+    <system-out><![CDATA[This is 12th priority...postInvalidUserLogin
+]]></system-out>
+  </testcase>
+  <testcase name="updateUserDetailsByPut" classname="com.liseInfotech.reqresTest.RequestTest" time="0.61">
+    <system-out><![CDATA[This is 13 in priority...putUpdateUser
+]]></system-out>
+  </testcase>
+  <testcase name="updateUserDetailsByPatch" classname="com.liseInfotech.reqresTest.RequestTest" time="0.86">
+    <system-out><![CDATA[This is 14th priority...patchUpdateUserDetails
+]]></system-out>
+  </testcase>
+  <testcase name="deleteDBObject" classname="com.liseInfotech.reqresTest.RequestTest" time="0.609">
+    <system-out><![CDATA[This is 15th priority...delete
+]]></system-out>
+  </testcase>
+</testsuite>
